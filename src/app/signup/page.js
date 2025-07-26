@@ -2,35 +2,39 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'  // <-- import Link here
 import { supabase } from '@/lib/supabaseClient'
 
-export const dynamic = 'force-dynamic'
-
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault()
-    const { data, error } = await supabase.auth.signInWithPassword({
+    setLoading(true)
+    setError('')
+
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     })
 
+    setLoading(false)
+
     if (error) {
       setError(error.message)
     } else {
-      router.replace('/user') // redirect after login
+      // Optionally you can redirect or show a success message
+      router.replace('/user') // or wherever you want to redirect after signup
     }
   }
 
   return (
-    <div className="max-w-md mx-auto mt-40 p-4 border rounded">
-      <h1 className="text-xl font-bold mb-4">Log In</h1>
-      <form onSubmit={handleLogin} className="space-y-4">
+    <div className="max-w-md mx-auto mt-20 p-4 border rounded">
+      <h1 className="text-xl font-bold mb-4">Sign Up</h1>
+      <form onSubmit={handleSignup} className="space-y-4">
         <input
           type="email"
           placeholder="Email"
@@ -50,18 +54,12 @@ export default function LoginPage() {
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          disabled={loading}
+          className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
         >
-          Log In
+          {loading ? 'Signing up...' : 'Sign Up'}
         </button>
       </form>
-
-      <p className="mt-4 text-center text-sm">
-        Don’t have an account?{' '}
-        <Link href="/signup" className="text-blue-600 hover:underline">
-          Sign up
-        </Link>
-      </p>
     </div>
   )
 }
