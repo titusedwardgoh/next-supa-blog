@@ -201,9 +201,8 @@ export async function PUT(request, context) {
     const fieldsToUpdate = {};
     if (data.title !== existingPost.title) fieldsToUpdate.title = data.title;
     if (data.description !== existingPost.description) fieldsToUpdate.description = data.description;
-
-    const newDateISO = data.date ? new Date(data.date).toISOString() : new Date().toISOString();
-    if (newDateISO !== existingPost.date) fieldsToUpdate.date = newDateISO;
+    if (data.visibility !== existingPost.visibility) fieldsToUpdate.visibility = data.visibility;
+    if (data.date && data.date !== existingPost.date) fieldsToUpdate.date = data.date;
 
     if (Object.keys(fieldsToUpdate).length > 0) {
       const { error: updateError } = await supabaseAdmin

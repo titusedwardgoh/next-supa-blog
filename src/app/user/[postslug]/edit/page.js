@@ -12,7 +12,10 @@ export default function EditPostPage() {
     description: '',
     body: '',
     customDate: '',
+    visibility: '', // Add visibility to form state
   });
+  const [originalDate, setOriginalDate] = useState('');
+  const [dateChanged, setDateChanged] = useState(false);
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
@@ -49,8 +52,11 @@ export default function EditPostPage() {
           title: post.title || '',
           description: post.description || '',
           body: joinedBody,
-          customDate: post.date ? new Date(post.date).toISOString().split('T')[0] : '',
+          customDate: post.date ? new Date(post.date).toISOString().slice(0, 16) : '',
+          visibility: post.visibility || '', // Set initial visibility
         });
+        setOriginalDate(post.date || '');
+        setDateChanged(false);
 
         if (post.images?.[0]) {
           setImageUrl(post.images[0].url);
@@ -74,6 +80,7 @@ export default function EditPostPage() {
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === 'customDate') setDateChanged(true);
     if (successMessage) setSuccessMessage('');
   }
 
@@ -153,13 +160,10 @@ function handleImageChange(e) {
       .replace(/\s+/g, '-');
 
     // Format date for storage
-    const rawDate = formData.customDate || new Date().toISOString();
-    const dateObj = new Date(rawDate);
-    const date = dateObj.toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
+    let date = originalDate;
+    if (dateChanged && formData.customDate) {
+      date = new Date(formData.customDate).toISOString();
+    }
 
     // Split body into paragraphs array for backend
     const bodyArray = formData.body
@@ -191,6 +195,7 @@ function handleImageChange(e) {
       date,
       images: imagesToSend,
       body: bodyArray,
+      visibility: formData.visibility, // Include visibility in update
     };
 
     try {
@@ -280,12 +285,24 @@ function handleImageChange(e) {
         />
 
         <input
-          type="date"
+          type="datetime-local"
           name="customDate"
           value={formData.customDate}
           onChange={handleChange}
           className="input input-bordered w-full"
         />
+
+        <select
+          name="visibility"
+          value={formData.visibility}
+          onChange={handleChange}
+          required
+          className="input input-bordered w-full"
+        >
+          <option value="">Select visibility...</option>
+          <option value="public">Public</option>
+          <option value="private">Private</option>
+        </select>
 
         <textarea
           name="body"

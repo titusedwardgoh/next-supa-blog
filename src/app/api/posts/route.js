@@ -10,6 +10,7 @@ export async function GET() {
         images(*),
         body(*)
       `)
+      // .eq('visibility', 'public') // Reverted: show all posts
       .order('date', { ascending: false })
       .limit(20)
 
@@ -66,7 +67,7 @@ export async function POST(request) {
     // Insert post with uniqueSlug
     const { data: postData, error: postError } = await supabaseAdmin
       .from('posts')
-      .insert([{ slug: uniqueSlug, title, description, date }])
+      .insert([{ slug: uniqueSlug, title, description, date, user_id: payload.user_id }])
       .select('*')
       .single()
 

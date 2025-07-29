@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function NewPosts() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function NewPosts() {
     description: '',
     body: '',
     customDate: '',
+    visibility: '', // <-- add this
   });
 
   const [image, setImage] = React.useState(null);
@@ -49,6 +51,13 @@ export default function NewPosts() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert('You must be logged in to create a post.');
+      return;
+    }
 
     let uploadedImageUrl = '';
 
@@ -119,6 +128,8 @@ export default function NewPosts() {
           ]
         : [],
       body: bodyArray,
+      user_id: user.id, // Add user_id to postData
+      visibility: formData.visibility,
     };
 
     try {
@@ -140,7 +151,7 @@ export default function NewPosts() {
       setSuccessMessage('Post created successfully!');
 
       // Reset form
-      setFormData({ title: '', description: '', body: '', customDate: '' });
+      setFormData({ title: '', description: '', body: '', customDate: '', visibility: '' });
       setImage(null);
       setImageUrl('');
       setImageDimensions({ width: 0, height: 0 });
@@ -187,6 +198,18 @@ export default function NewPosts() {
           onChange={handleChange}
           className="input input-bordered w-full"
         />
+
+        <select
+          name="visibility"
+          value={formData.visibility}
+          onChange={handleChange}
+          required
+          className="input input-bordered w-full"
+        >
+          <option value="">Select visibility...</option>
+          <option value="public">Public</option>
+          <option value="private">Private</option>
+        </select>
 
         <textarea
           name="body"
