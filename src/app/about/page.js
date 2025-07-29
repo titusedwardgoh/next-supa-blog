@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function AboutPage() {
   return (
     <div className="mt-20">
@@ -5,7 +7,7 @@ export default function AboutPage() {
       <div className="text-center py-20 px-5">
         <h1 className="text-4xl font-black mb-6">About BlogHub</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          The story behind the platform that's empowering writers to share their voices with the world.
+          The story behind the platform that&apos;s empowering writers to share their voices with the world.
         </p>
       </div>
 
@@ -26,11 +28,11 @@ export default function AboutPage() {
             </p>
 
             <p className="text-lg leading-relaxed mb-6">
-              I remember the exact moment the idea for BlogHub was born. I was trying to help my grandmother set up a blog to share her family recipes and stories. She wanted something simple - just a place to write and share with her loved ones. But every platform we tried required technical knowledge she didn't have, or forced her to pay for features she didn't need.
+              I remember the exact moment the idea for BlogHub was born. I was trying to help my grandmother set up a blog to share her family recipes and stories. She wanted something simple - just a place to write and share with her loved ones. But every platform we tried required technical knowledge she didn&apos;t have, or forced her to pay for features she didn&apos;t need.
             </p>
 
             <p className="text-lg leading-relaxed mb-6">
-              That's when I realized there was a gap in the market. There were platforms for professional bloggers, platforms for businesses, but nothing simple and beautiful for everyday people who just wanted to share their stories, recipes, travel adventures, or thoughts with the world.
+              That&apos;s when I realized there was a gap in the market. There were platforms for professional bloggers, platforms for businesses, but nothing simple and beautiful for everyday people who just wanted to share their stories, recipes, travel adventures, or thoughts with the world.
             </p>
 
             <p className="text-lg leading-relaxed mb-6">
@@ -42,7 +44,7 @@ export default function AboutPage() {
             </p>
 
             <p className="text-lg leading-relaxed">
-              Today, I'm proud to see how BlogHub has evolved. It's not just a platform anymore - it's a community where people connect through stories, where voices that might never have been heard find their audience, and where the simple act of sharing creates meaningful connections.
+              Today, I&apos;m proud to see how BlogHub has evolved. It&apos;s not just a platform anymore - it&apos;s a community where people connect through stories, where voices that might never have been heard find their audience, and where the simple act of sharing creates meaningful connections.
             </p>
           </div>
         </div>
@@ -78,15 +80,15 @@ export default function AboutPage() {
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
           <p className="text-lg text-gray-600 mb-8">
-            Have questions, suggestions, or just want to say hello? I'd love to hear from you.
+            Have questions, suggestions, or just want to say hello? I&apos;d love to hear from you.
           </p>
           <div className="flex gap-4 justify-center">
             <a href="mailto:marcus@bloghub.com" className="btn btn-primary">
               Email Marcus
             </a>
-            <a href="/posts" className="btn btn-outline">
+            <Link href="/posts" className="btn btn-outline">
               Explore Our Community
-            </a>
+            </Link>
           </div>
         </div>
       </div>
