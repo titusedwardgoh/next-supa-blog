@@ -39,7 +39,7 @@ export default async function UserBlogPage({ params }) {
     }
 
     return (
-      <div className="pt-20">
+      <div className="pt-40">
         {/* User Profile Header */}
         <div className="text-center mb-10 px-5">
           <h1 className="text-3xl font-bold mb-2">{user.full_name || username}</h1>
@@ -64,7 +64,7 @@ export default async function UserBlogPage({ params }) {
                 return (
                   <article key={post.id} className="bg-base-200 rounded-lg overflow-hidden shadow-md">
                     {image && (
-                      <Link href={`/posts/${post.slug}`}>
+                      <Link href={`/${username}/${post.slug}`}>
                         <Image
                           src={image.url}
                           width={image.width}
@@ -78,7 +78,7 @@ export default async function UserBlogPage({ params }) {
                     <div className="p-6">
                       <h2 className="text-2xl font-bold mb-2">
                         <Link 
-                          href={`/posts/${post.slug}`}
+                          href={`/${username}/${post.slug}`}
                           className="hover:text-primary transition-colors"
                         >
                           {post.title}
@@ -107,7 +107,7 @@ export default async function UserBlogPage({ params }) {
                         )}
                       </div>
                       
-                      <Link href={`/posts/${post.slug}`}>
+                      <Link href={`/${username}/${post.slug}`}>
                         <button className="btn btn-primary mt-4">Read More</button>
                       </Link>
                     </div>
