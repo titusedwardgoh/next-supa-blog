@@ -21,7 +21,7 @@ export default function UserLayout({ children }) {
     }
 
     checkUser()
-  }, [])
+  }, [router])
 
   if (loading) {
     return <div className="p-4">Loading...</div> // optional spinner or skeleton

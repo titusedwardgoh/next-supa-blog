@@ -17,7 +17,7 @@ export default async function UserBlogPage({ params }) {
       return (
         <div className="pt-20 text-center">
           <h1 className="text-2xl font-bold text-red-600">User not found</h1>
-          <p className="mt-4">The user "{username}" doesn't exist.</p>
+          <p className="mt-4">The user &quot;{username}&quot; doesn&apos;t exist.</p>
         </div>
       );
     }
